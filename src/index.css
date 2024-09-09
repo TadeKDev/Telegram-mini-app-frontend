@@ -1,0 +1,245 @@
+@config "../tailwind.config.js";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Monument Extended";
+  src: url("/fonts/MonumentExtended-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AeonikProBold";
+  src: url("/fonts/Aeonik Pro Bold.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AeonikProTRIALBold";
+  src: url("/fonts/AeonikProTRIAL-Bold.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GilRoyRegular";
+  src: url("/fonts/Gilroy-Regular.ttf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SourceCodePro";
+  src: url("/fonts/SourceCodePro-Regular.ttf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "RobotoRegular";
+  src: url("/fonts/Roboto-Regular.ttf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SFPRODISPLAYREGULAR";
+  src: url("/fonts/SFPRODISPLAYREGULAR.OTF") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AeonikProTRIALRegular";
+  src: url("/fonts/AeonikProTRIAL-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AeonikProTRIALLight";
+  src: url("/fonts/AeonikProTRIAL-Light.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvenirNext";
+  src: url("/fonts/AvenirNextLTPro-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BasementGrotesque";
+  src: url("/fonts/BasementGrotesque-Black_v1.202.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Formula1";
+  src: url("/fonts/Formula1-Regular-1.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AeonikPro-Medium";
+  src: url("/fonts/AeonikProTRIAL-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Parabole-TextRegular";
+  src: url("/fonts/Parabole-DisplayRegular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "american-typewriter";
+  src: url("/fonts/american-typewriter.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Talladega-Knight";
+  src: url("/fonts/talladega_knight.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "andalemo";
+  src: url("/fonts/ANDALEMO.TTF") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "monaco";
+  src: url("/fonts/Monaco.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IcelandRegular";
+  src: url("/fonts/Iceland-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "RajdhaniRegular";
+  src: url("/fonts/rajdhani.regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GurmukhiSangam";
+  src: url("/fonts/Gurmukhi Sangam MN.ttc") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("/fonts/Helvetica.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ReadexProMedium";
+  src: url("/fonts/ReadexPro-Medium.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "OrbitronMedium";
+  src: url("/fonts/Orbitron-Medium.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@keyframes slide {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0% 0;
+  }
+}
+
+.pac-logo::after {
+  display: none;
+}
+
+.pac-container {
+  font-family: "AvenirNext";
+  margin-top: 6px;
+  border-radius: 14px;
+}
+
+body {
+  --gmpx-color-surface: #242214;
+  --gmpx-color-on-surface: #a7aa4e;
+}
+.wallet-adapter-button-trigger {
+  color: black !important;
+  background-color: inherit !important;
+}
+.wallet-adapter-button-trigger:hover {
+  background-color: inherit !important;
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-220%);
+  }
+}
+
+.animate-slideOutLeft {
+  animation: slideOutLeft 5s forwards;
+}
+
+.custom-toast-container .Toastify__toast {
+  @apply bg-[#1A1A1A];
+}
+
+.custom-toast-container .Toastify__progress-bar {
+  @apply bg-gradient-to-r from-[#D7CDFF] to-[#D2FFDE];
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
