@@ -1,8 +1,12 @@
 export interface Agent {
     agentId: string;
     level: number;
+    name: string;
+    task: string;
     agentImage: string;
+    assignTo:string;
     passiveIncome: number;
+    startTime: number;
 }
 
 export interface User {
@@ -41,13 +45,30 @@ export interface CodingTaskDetail {
     answer: string[];
 }
 
+export interface OtherTaskDetail {
+
+}
+
 export interface Task{
     category: string;
     description: string;
-    detail: LabelTaskDetail | AnnotationTaskDetail | CodingTaskDetail;
+    detail: LabelTaskDetail | AnnotationTaskDetail | CodingTaskDetail | OtherTaskDetail;
     logo: string;
     reward: number[];
     title: string;
     type: string;
     _id: string;
+}
+
+export interface Job{
+    requiredLevel:number;
+    requiredEnergy: number;
+    passiveIncome: number;
+    title: string;
+    description:string;
+    employer:string;
+    assignTo:string;
+    requireTime:number;
+    logo:string;
+    _id:string;
 }

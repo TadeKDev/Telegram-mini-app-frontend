@@ -1,23 +1,24 @@
-import {Task, LabelTaskDetail,AnnotationTaskDetail} from '../../routes/types';
+import {LabelTaskDetail,AnnotationTaskDetail} from '../../routes/types';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useState, useContext} from 'react';
 import { MiniAppContext } from "../../routes/MiniAppContextProvider";
-import axiosInstance from '../../api';
+import { Task } from '../../routes/types';
 
 interface ModalProps {
   isOpen: boolean;  
   onClose: () => void;
   onFinish: () => void;
-  task : Task;  
+  taskIndex : string;  
 }
-export const LabelTaskModal: React.FC<ModalProps> = ({isOpen, onClose, task, onFinish})=>{
+export const LabelTaskModal: React.FC<ModalProps> = ({isOpen, onClose, taskIndex, onFinish})=>{
   if (!isOpen) return null;
+  const {tasks} = useContext(MiniAppContext);
   const [index,setIndex] = useState<number>(-1);
+  const task = tasks.filter((task:Task)=> task._id === taskIndex)[0];
   const detail = task.detail as LabelTaskDetail;
   const [imageIndex, setImageIndex] = useState<number>(0);
   const [result, setResult] = useState<number[]>([]);
-  const {setCurrentTaskResult} = useContext(MiniAppContext);
   const handleNext = ()=>{
     if(imageIndex+1 < detail.images.length){
       if(!result[imageIndex]){
@@ -35,22 +36,12 @@ export const LabelTaskModal: React.FC<ModalProps> = ({isOpen, onClose, task, onF
     
     else if( imageIndex+1 === detail.images.length ){
       onClose();
-      setCurrentTaskResult(result);
       onFinish();
     }
   }
   const handleBack = ()=>{
     if(imageIndex === 0) {
-      axiosInstance.post('/earn/withdrawtask',{task}).then(response=>{
-        if(response.status===200){
-          onClose();
-        }
-      }).catch(error=>{
-        if(error.status === 400){
-          console.log("Not available");
-        }
-      })
-      
+      onClose();
     }
     if(result[imageIndex-1]>0){
       setIndex(result[imageIndex-1]);
@@ -116,8 +107,10 @@ export const LabelTaskModal: React.FC<ModalProps> = ({isOpen, onClose, task, onF
   )
 }
 
-export const AnnotationTaskModal: React.FC<ModalProps> = ({isOpen, onClose, task, onFinish}) => {
+export const AnnotationTaskModal: React.FC<ModalProps> = ({isOpen, onClose, taskIndex, onFinish}) => {
   if (!isOpen) return null;
+  const {tasks} = useContext(MiniAppContext);
+  const task = tasks.filter((task:Task)=> task._id === taskIndex)[0];
   const detail = task.detail as AnnotationTaskDetail;
   const [index,setIndex] = useState<number>(-1);
   const count = 5;
@@ -243,7 +236,9 @@ export const AnnotationTaskModal: React.FC<ModalProps> = ({isOpen, onClose, task
   )
 }
 
-export const RewardModal: React.FC<ModalProps> = ({isOpen, onClose,task, onFinish})=>{
+export const RewardModal: React.FC<ModalProps> = ({isOpen, onClose,taskIndex, onFinish})=>{
+  const {tasks} = useContext(MiniAppContext);
+  const task = tasks.filter((task:Task)=> task._id === taskIndex)[0];
   if(!isOpen) return null;
   return(
     <div className="absolute top-0 w-full h-full bg-[#010101df]">

@@ -11,6 +11,7 @@ import Airdrop from "../pages/Airdrop";
 import Earn from "../pages/Earn";
 import Tmp3 from "../pages/Tmp3";
 import Tmp4 from "../pages/Tmp4";
+import Workforce from "../pages/Workforce";
 
 const getRouteElementPublic = (
   Component: React.ElementType
@@ -33,6 +34,7 @@ const routes: RouteObject[] = [
   { path: "/airdrop", element: getRouteElementPublic(Airdrop) },
   { path: "/settings", element: getRouteElementPublic(Tmp3) },
   { path: "/settings/languages", element: getRouteElementPublic(Tmp4) },
+  { path: "/workforce", element: getRouteElementPublic(Workforce) },
 ];
 
 const Router = createBrowserRouter(routes);

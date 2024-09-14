@@ -1,49 +1,30 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import {LabelTaskModal,AnnotationTaskModal, RewardModal} from '../Tasks';
 import { MiniAppContext } from "../../routes/MiniAppContextProvider";
 import { Task } from "../../routes/types";
-import axiosInstance from "../../api";
 
 const Earn = () => {
   const [currentTab, setCurrentTab] = useState("DeTask");
-  const {currentTask,setCurrentTask,isToggled, setToggle,currentTaskResult,coins,setCoins,power,setPower,currentUser,setCurrentUser} = useContext(MiniAppContext);
+  const {isToggled, setToggle,coins,setCoins,power,setPower,currentUser,setCurrentUser, tasks} = useContext(MiniAppContext);
   const [isFinished,setFinished] = useState(true);
-  const [tasks,setTasks] = useState<Task[]>([]);
-  const handleTask=(idx: number)=>{
-    setToggle(true);
-    setFinished(false)
-    setCurrentTask(tasks.filter(task=>task.category === currentTab)[idx]);
-  }
+  const [index,setIndex] = useState("");
+  const task = tasks.filter((task:Task)=> task._id === index)[0];
   const handleFinish = ()=>{
     setToggle(true);
     setFinished(true);
   }
 
   const handleGetReward = ()=>{
-    axiosInstance.post('/earn/getreward',{task: currentTask,result:currentTaskResult}).then(response=>{
-      if(response.status === 200){
-        if(currentTask.reward[0]>0){
-          setCoins(coins + currentTask.reward[0]);
-          setCurrentUser({...currentUser,coins: currentUser.coins + currentTask.reward[0]});
-        }
-        if(currentTask.reward[0]>0){
-          setPower(power + currentTask.reward[1]);
-          setCurrentUser({...currentUser,power: currentUser.power + currentTask.reward[1]});
-        }
-        setToggle(false);
-      }
-    }).catch()
+    if(task?.reward[0]>0){
+      setCoins(coins + task.reward[0]);
+      setCurrentUser({...currentUser, coins: currentUser.coins + task.reward[0]});
+    }
+    if(task?.reward[1]>0){
+      setPower(power + task.reward[1]);
+      setCurrentUser({...currentUser, power: currentUser.power + task.reward[1]});
+    }
+    setToggle(false);
   }
-
-  useEffect(()=>{
-    axiosInstance.get('/earn/earnboard')  
-    .then(response => {
-      setTasks(response.data);
-    })  
-    .catch(error => {  
-        console.error('Error fetching data:', error);  
-    });
-  },[]);
 
   return (
     <main className="relative pt-24 pb-24 w-full min-h-full bg-[url('/images/numbers.png')] bg-cover bg-[#5200FF64]">
@@ -104,11 +85,14 @@ const Earn = () => {
         <div className="text-sm text-[#ffffffc0] font-semibold mt-4 ">
           {currentTab}
         </div>
-        {tasks.filter( task=>task.category === currentTab).map((task, idx) => (
+        {tasks.filter((task: Task)=>task.category === currentTab).map((task:Task, idx: number) => (
           <div
             className="flex justify-between items-center mt-2 border-[1px] border-[#ffffff16] p-3 rounded-3xl bg-gradient-to-b from-[#000000] to-[#0f1f3d]"
-            key={idx} onClick={()=>{handleTask(idx)}}
-          >
+            key={idx} onClick={()=>{
+              setToggle(true);
+              setFinished(false);
+              setIndex(task._id);
+            }}>
             <img className="w-14 h-14 object-contain" src={task.logo} />
             <div className="ml-2 w-60">
               <div className="text-white font-semibold text-sm">
@@ -124,10 +108,11 @@ const Earn = () => {
           </div>
         ))}
       </div>
-      {currentTask.type === "data_labeling" ? 
-      (<LabelTaskModal isOpen={isToggled && !isFinished} onClose={()=>setToggle(false)} task={currentTask} onFinish ={ handleFinish} />): 
-      (currentTask.type === "Annotation" ? (<AnnotationTaskModal isOpen={isToggled && !isFinished} onClose={()=>setToggle(false)} task={currentTask} onFinish={handleFinish}/>):(<div></div>))}
-      <RewardModal isOpen={isToggled && isFinished} onClose={()=>setToggle(false)} task={currentTask} onFinish={handleGetReward}/>
+
+      {index !== "" && task?.type === "data_labeling" ? 
+      (<LabelTaskModal isOpen={isToggled && !isFinished} onClose={()=>setToggle(false)} taskIndex={index} onFinish ={ handleFinish} />): 
+      (index !== "" && task?.type === "Annotation" ? (<AnnotationTaskModal isOpen={isToggled && !isFinished} onClose={()=>setToggle(false)} taskIndex={index} onFinish={handleFinish}/>):(<div></div>))}
+      <RewardModal isOpen={isToggled && isFinished} onClose={()=>setToggle(false)} taskIndex={index} onFinish={handleGetReward}/>
     </main>
   );
 };
